@@ -1,13 +1,5 @@
--- love = {}
--- love.graphics = {}
---
--- love.graphics.getWidth = function () return 500 end
--- love.graphics.getHeight = function () return 500 end
-
-print(type(love.graphics.getWidth))
-
-local screenWidth = 500 -- love.graphics.getWidth()
-local screenHeight = getHeight()
+local screenWidth = love.graphics.getWidth()
+local screenHeight = love.graphics.getHeight()
 
 local function initPlayer()
     return {
@@ -86,42 +78,42 @@ local player = initPlayer()
 local proj = initProjectile()
 local obstacles = initObstacles()
 local game = initGame()
--- local fontXG = love.graphics.setNewFont("Merchant.ttf", 60)
--- local fontS = love.graphics.setNewFont("Merchant.ttf", 25)
+local fontXG = love.graphics.setNewFont("Merchant.ttf", 60)
+local fontS = love.graphics.setNewFont("Merchant.ttf", 25)
 
--- love.window.setTitle("Breakout lua")
+love.window.setTitle("Breakout lua")
 
--- local function clamp(value, min, max)
---     return math.min(math.max(value, min), max)
--- end
+local function clamp(value, min, max)
+    return math.min(math.max(value, min), max)
+end
 
--- local function inputs(dt)
---     if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
---         if not game.paused and not game.dead then
---             player.position.x = math.min(player.position.x + 1 * dt * player.speed, screenWidth - player.width)
---         end
---     end
+local function inputs(dt)
+    if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
+        if not game.paused and not game.dead then
+            player.position.x = math.min(player.position.x + 1 * dt * player.speed, screenWidth - player.width)
+        end
+    end
 
---     if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
---         if not game.paused and not game.dead then
---             player.position.x = math.max(player.position.x - 1 * dt * player.speed, 0);
---         end
---     end
--- end
+    if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
+        if not game.paused and not game.dead then
+            player.position.x = math.max(player.position.x - 1 * dt * player.speed, 0);
+        end
+    end
+end
 
--- function love.keyreleased(key)
---     if key == "return" then
---         if game.paused then
---             game.paused = false
---         end
---         if game.dead then
---             player = initPlayer()
---             proj = initProjectile()
---             obstacles = initObstacles()
---             game = initGame()
---         end
---     end
--- end
+function love.keyreleased(key)
+    if key == "return" then
+        if game.paused then
+            game.paused = false
+        end
+        if game.dead then
+            player = initPlayer()
+            proj = initProjectile()
+            obstacles = initObstacles()
+            game = initGame()
+        end
+    end
+end
 
 local function colisionWithBorders()
     if (proj.position.x <= 0) or (proj.position.x + proj.width >= screenWidth) then
@@ -202,76 +194,68 @@ local function levelManagement()
     obstacles = initObstacles()
 end
 
--- local function ui()
---     if game.dead then
---         love.graphics.print('score: ' .. game.score, fontS, screenWidth * 0.02, screenHeight * 0.05)
---         love.graphics.print('level: ' .. game.level, fontS, screenWidth * 0.02, screenHeight * 0.05 + 30)
---         love.graphics.setNewFont(40)
---         love.graphics.setColor(1, 1, 1)
---         love.graphics.printf('Game Over!', fontXG, screenWidth / 2 - 200, 300, 400, 'center')
---         love.graphics.setNewFont(18)
---         love.graphics.printf('Press return to restart!', fontS, screenWidth / 2 - 200, 400, 400, 'center')
---     elseif game.paused then
---         love.graphics.setNewFont(25)
---         love.graphics.setColor(1, 1, 1)
---         love.graphics.printf('Press return to start!', fontS, screenWidth / 2 - 200, 300, 400, 'center')
---     else
---         love.graphics.print('score: ' .. game.score, fontS, screenWidth * 0.02, screenHeight * 0.05)
---         love.graphics.print('level: ' .. game.level, fontS, screenWidth * 0.02, screenHeight * 0.05 + 30)
---     end
--- end
+local function ui()
+    if game.dead then
+        love.graphics.print('score: ' .. game.score, fontS, screenWidth * 0.02, screenHeight * 0.05)
+        love.graphics.print('level: ' .. game.level, fontS, screenWidth * 0.02, screenHeight * 0.05 + 30)
+        love.graphics.setNewFont(40)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.printf('Game Over!', fontXG, screenWidth / 2 - 200, 300, 400, 'center')
+        love.graphics.setNewFont(18)
+        love.graphics.printf('Press return to restart!', fontS, screenWidth / 2 - 200, 400, 400, 'center')
+    elseif game.paused then
+        love.graphics.setNewFont(25)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.printf('Press return to start!', fontS, screenWidth / 2 - 200, 300, 400, 'center')
+    else
+        love.graphics.print('score: ' .. game.score, fontS, screenWidth * 0.02, screenHeight * 0.05)
+        love.graphics.print('level: ' .. game.level, fontS, screenWidth * 0.02, screenHeight * 0.05 + 30)
+    end
+end
 
--- local function renderObstacles()
---     local colorLevel = ((game.level + 1) % (#game.levelColors)) + 1
+local function renderObstacles()
+    local colorLevel = ((game.level + 1) % (#game.levelColors)) + 1
 
---     love.graphics.setColor(
---         game.levelColors[colorLevel][1] / 255,
---         game.levelColors[colorLevel][2] / 255,
---         game.levelColors[colorLevel][3] / 255
---     )
+    love.graphics.setColor(
+        game.levelColors[colorLevel][1] / 255,
+        game.levelColors[colorLevel][2] / 255,
+        game.levelColors[colorLevel][3] / 255
+    )
 
---     for _, obstacle in ipairs(obstacles) do
---         if obstacle.live then
---             love.graphics.rectangle(
---                 "fill",
---                 obstacle.position.x,
---                 obstacle.position.y,
---                 obstacle.width,
---                 obstacle.height)
---         end
---     end
--- end
+    for _, obstacle in ipairs(obstacles) do
+        if obstacle.live then
+            love.graphics.rectangle(
+                "fill",
+                obstacle.position.x,
+                obstacle.position.y,
+                obstacle.width,
+                obstacle.height)
+        end
+    end
+end
 
--- local function renderProjectile()
---     love.graphics.setColor(1, 1, 0)
---     love.graphics.rectangle("fill", proj.position.x, proj.position.y, proj.width, proj.height)
--- end
+local function renderProjectile()
+    love.graphics.setColor(1, 1, 0)
+    love.graphics.rectangle("fill", proj.position.x, proj.position.y, proj.width, proj.height)
+end
 
--- local function renderPlayer()
---     love.graphics.setColor(1, 1, 1)
---     love.graphics.rectangle("fill", player.position.x, player.position.y, player.width, player.height)
--- end
+local function renderPlayer()
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.rectangle("fill", player.position.x, player.position.y, player.width, player.height)
+end
 
 function love.update(dt)
-    -- inputs(dt)
-    -- projectile(dt)
-    -- levelManagement()
-    --
+    inputs(dt)
+    projectile(dt)
+    levelManagement()
+
   -- print("from love update: " ..dt)
 end
 
 function love.draw()
---     renderPlayer()
---     renderProjectile()
---     renderObstacles()
---     ui()
-    print("love draw called")
-end
-
-function draw()
-    print("aaa")
-end
-
-function hello_world(name)
-   print("Hello " ..name)
+    renderPlayer()
+    renderProjectile()
+    renderObstacles()
+    ui()
+    -- print("love draw called")
 end
