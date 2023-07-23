@@ -5,7 +5,9 @@ install-lua :
 	cd lua-5.4.6 && \
 	make all test
 compile :
-	gcc -o main main.c -llua
-
+	gcc main.c $(pkg-config --libs --cflags raylib) -llua -o main
 run :
 	./main
+
+compile-and-run:
+	gcc main.c $(pkg-config --libs --cflags raylib) -llua -o main && ./main
