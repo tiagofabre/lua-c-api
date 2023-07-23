@@ -3,6 +3,8 @@
 - Lua download page: https://www.lua.org/download.html
   - How to build: https://www.lua.org/manual/5.4/readme.html
 - Introduction to C API: https://sodocumentation.net/lua/topic/671/introduction-to-lua-c-api
+- C API https://www.lua.org/pil/24.html
+  - Stack https://www.lua.org/pil/24.2.html
 - Syntax sugar: https://www.lua.org/manual/5.4/manual.html#5
 - There is a fantasy console written in lua - PICO-8: https://www.lexaloffle.com/pico-8.php
 - Examples of how to integrate c++ with lua: https://www.codingwiththomas.com/blog/a-lua-c-api-cheat-sheet
